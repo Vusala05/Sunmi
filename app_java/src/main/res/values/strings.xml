@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_the_url">Enter the url</string>
+    <string name="print_logo">print logo</string>
+    <string name="print_qr">print qr</string>
+    <string name="print_barcode">print barcode</string>
+    <string name="print_receipt">print receipt</string>
+</resources>

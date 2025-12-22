@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "PrinterSample"
 include(":app")
- 
+include(":app_java")

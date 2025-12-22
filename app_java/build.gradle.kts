@@ -1,14 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
 }
 
 android {
-    namespace = "com.example.printersample"
+    namespace = "com.example.app_java"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.printersample"
+        applicationId = "com.example.app_java"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -30,22 +29,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
     buildFeatures {
         viewBinding = true
     }
-
 }
 
 dependencies {
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.printerx)
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
