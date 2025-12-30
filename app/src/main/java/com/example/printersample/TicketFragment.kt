@@ -1,6 +1,7 @@
 package com.example.printersample
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -22,45 +23,40 @@ class TicketFragment : Fragment(R.layout.fragment_ticket) {
         _binding = FragmentTicketBinding.bind(view)
 
         printerViewModel.initPrinter(requireContext())
+        binding.qrPrint.setOnClickListener(::setOnClick)
+        binding.barcodePrint.setOnClickListener(::setOnClick)
+        binding.printReceipt.setOnClickListener(::setOnClick)
+        binding.logoPrint.setOnClickListener(::setOnClick)
+    }
 
-        binding.qrPrint.setOnClickListener {
-            url = binding.url.text.toString().trim()
+    private fun getSafeUrl(): String? {
+        url = binding.url.text.toString().trim()
             if (!url.isNullOrBlank()) {
-                ticketViewModel.qrCode(url!!)
-            } else {
-                showError()
+               return  url;
             }
-        }
+        showError()
+        return null
+    }
 
-        binding.barcodePrint.setOnClickListener {
-            url = binding.url.text.toString().trim()
-            if (!url.isNullOrBlank()) {
-                ticketViewModel.printBarcode(url!!)
-            } else {
-                showError()
+    private  fun setOnClick(view: View){
+        val tag: Int = view.tag.toString().toInt()
+        val url = getSafeUrl()
+        if(url ==null) return
+        when(tag){
+            0 -> Log.e("test","invalid button")
+            1-> {
+                binding.url.clearFocus()
+                ticketViewModel.printBitmap(view)
             }
-        }
+            2->  ticketViewModel.qrCode(url)
+            3-> ticketViewModel.printBarcode(url)
+            4-> ticketViewModel.printTicket(requireContext(),view,url)
 
-        binding.printReceipt.setOnClickListener {
-            url = binding.url.text.toString().trim()
-            if (!url.isNullOrBlank()) {
-                ticketViewModel.printTicket(
-                    requireContext(),
-                    requireView(),
-                    url!!
-                )
-            } else {
-                showError()
-            }
-        }
-        binding.logoPrint.setOnClickListener {
-            binding.url.clearFocus()
-            ticketViewModel.printBitmap(requireView())
         }
     }
 
-    private fun showError() {
-        Toast.makeText(requireContext(), "URL can't be empty, please fill it", Toast.LENGTH_SHORT).show()
+    private fun showError(message: String? =null){
+        Toast.makeText(requireContext(), message?:"URL can't be empty, please fill it", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

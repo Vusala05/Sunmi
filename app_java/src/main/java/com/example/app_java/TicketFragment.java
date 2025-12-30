@@ -1,6 +1,7 @@
 package com.example.app_java;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.app_java.databinding.FragmentTicketBinding;
+
 
 public class TicketFragment extends Fragment {
 
@@ -33,53 +35,63 @@ public class TicketFragment extends Fragment {
 
         printerViewModel.initPrinter(requireContext());
 
-        binding.qrPrint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                url = binding.url.getText().toString().trim();
-                if (url != null && !url.isEmpty()) {
+        binding.qrPrint.setOnClickListener(this::setOnClick);
+
+        binding.barcodePrint.setOnClickListener(this::setOnClick);
+        binding.printReceipt.setOnClickListener(this::setOnClick);
+
+        binding.logoPrint.setOnClickListener(this::setOnClick);
+         
+    }
+
+    @NonNull
+     private String getSafeUrl() throws  NullPointerException {
+         url = binding.url.getText().toString().trim();
+         if (url.isEmpty()  || url.isBlank()) throw new NullPointerException();
+
+         return  url;
+
+
+     }
+
+    void setOnClick(View view){
+            try {
+                int tag = Integer.parseInt(view.getTag().toString());
+            String url = getSafeUrl();
+            switch (tag) {
+                case 0:
+                    Log.e("test", "test");
+                    break;
+                case 1: {
+                    binding.url.clearFocus();
+                    ticketViewModel.printBitmap(requireView());
+                    break;
+                }
+                case 2:
                     ticketViewModel.qrCode(url);
-                } else {
-                    showError();
-                }
-            }
-        });
-
-        binding.barcodePrint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                url = binding.url.getText().toString().trim();
-                if (url != null && !url.isEmpty()) {
+                    break;
+                case 3:
                     ticketViewModel.printBarcode(url);
-                } else {
-                    showError();
-                }
-            }
-        });
-
-        binding.printReceipt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                url = binding.url.getText().toString().trim();
-                if (url != null && !url.isEmpty()) {
+                    break;
+                case 4:
                     ticketViewModel.printTicket(requireContext(), requireView(), url);
-                } else {
-                    showError();
-                }
+                    break;
             }
-        });
 
-        binding.logoPrint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.url.clearFocus();
-                ticketViewModel.printBitmap(requireView());
+            } catch (Exception e) {
+               Log.e("Error",e.getLocalizedMessage());
             }
-        });
+
+    }
+
+
+
+    private void showError(String message) {
+        Toast.makeText(requireContext(), message!=null? message:"URL can't be empty, please fill it", Toast.LENGTH_SHORT).show();
     }
 
     private void showError() {
-        Toast.makeText(requireContext(), "URL can't be empty, please fill it", Toast.LENGTH_SHORT).show();
+        showError(null);
     }
 
     @Override

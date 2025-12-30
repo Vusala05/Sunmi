@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/enter_the_url"
+        android:inputType="textUri"
+        android:maxLines="1"
         android:background="@drawable/background"
         android:layout_marginTop="100dp"
         android:padding="12dp"/>
@@ -21,6 +23,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_shape"
         android:textColor="@color/white"
+        android:tag="1"
         android:text="@string/print_logo"
         android:layout_marginTop="16dp"/>
     <androidx.appcompat.widget.AppCompatButton
@@ -30,6 +33,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:text="@string/print_qr"
+        android:tag="2"
         android:background="@drawable/button_shape"
         android:layout_marginTop="16dp"/>
 
@@ -39,6 +43,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_shape"
         android:textColor="@color/white"
+        android:tag="3"
         android:text="@string/print_barcode"
         android:layout_marginTop="16dp"/>
 
@@ -48,6 +53,7 @@
             android:background="@drawable/button_shape"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:tag="4"
             android:text="@string/print_receipt"
             android:layout_marginTop="16dp"/>
 

@@ -49,6 +49,7 @@ public class TicketViewModel extends ViewModel {
                 PrinterHolder.selectPrinter.lineApi().printQrCode(url, qrCodeStyle);
                 PrinterHolder.selectPrinter.lineApi().autoOut();
             } catch (com.sunmi.printerx.SdkException e) {
+
                 e.printStackTrace();
             }
         }

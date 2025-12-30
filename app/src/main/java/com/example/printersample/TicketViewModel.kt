@@ -1,6 +1,5 @@
 package com.example.printersample
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.view.View
@@ -22,23 +21,23 @@ class TicketViewModel : ViewModel() {
 
     fun printBarcode(url: String) {
 
-        selectPrinter?.lineApi()?.run {
+        Constant.selectPrinter?.lineApi()?.run {
             val barcodeStyle = BarcodeStyle.getStyle()
                 .setAlign(Align.CENTER)
-                .setDotWidth(4)
-                .setBarHeight(100)
+                .setDotWidth(2)
+                .setBarHeight(50)
                 .setReadable(HumanReadable.POS_THREE)
-            barcodeStyle.setWidth(384)
+            barcodeStyle.setWidth(284)
             printBarCode(url, barcodeStyle)
             autoOut()
         }
     }
 
     fun qrCode(url: String) {
-        selectPrinter?.lineApi()?.run {
+        Constant.selectPrinter?.lineApi()?.run {
             val qrCodeStyle = QrStyle.getStyle()
                 .setAlign(Align.CENTER)
-                .setDot(11)
+                .setDot(9)
                 .setErrorLevel(ErrorLevel.H)
             printQrCode(url, qrCodeStyle)
             autoOut()
@@ -46,47 +45,66 @@ class TicketViewModel : ViewModel() {
     }
 
     fun printBitmap(view: View) {
-        selectPrinter?.lineApi()?.run {
+        Constant.selectPrinter?.lineApi()?.run {
             val option: BitmapFactory.Options = BitmapFactory.Options().apply {
                 inScaled = false
             }
-            val bitmap = BitmapFactory.decodeResource(view.context.resources, R.drawable.sunmi, option)
-            printBitmap(bitmap, BitmapStyle.getStyle().setAlign(Align.CENTER).setAlgorithm(ImageAlgorithm.BINARIZATION).setValue(130).setWidth(384).setHeight(150))
-            printBitmap(bitmap, BitmapStyle.getStyle().setAlign(Align.CENTER).setAlgorithm(ImageAlgorithm.DITHERING).setWidth(384).setHeight(150))
+            val bitmap =
+                BitmapFactory.decodeResource(view.context.resources, R.drawable.sunmi, option)
+            printBitmap(bitmap,
+                BitmapStyle.getStyle().setAlign(Align.CENTER)
+                    .setAlgorithm(ImageAlgorithm.BINARIZATION).setValue(130).setWidth(384)
+                    .setHeight(150)
+            )
+            printBitmap(bitmap,
+                BitmapStyle.getStyle().setAlign(Align.CENTER).setAlgorithm(ImageAlgorithm.DITHERING)
+                    .setWidth(384).setHeight(150)
+            )
             autoOut()
         }
     }
 
     fun printTicket(context: Context, view: View, url: String) {
-        selectPrinter?.lineApi()?.run {
+        Constant.selectPrinter?.lineApi()?.run {
             enableTransMode(true)
 
             initLine(BaseStyle.getStyle().setAlign(Align.CENTER))
 
             printText("******", TextStyle.getStyle())
-            printText("WELCOME TO SUNMI", TextStyle.getStyle().enableBold(true).setTextWidthRatio(1).setTextHeightRatio(1))
+            printText(
+                "WELCOME TO SUNMI",
+                TextStyle.getStyle().enableBold(true).setTextWidthRatio(1).setTextHeightRatio(1)
+            )
             printText("******", TextStyle.getStyle())
 
             val options = BitmapFactory.Options().apply {
                 inScaled = false
             }
 
-            val bitmap = BitmapFactory.decodeResource(view.context.resources,R.drawable.sunmi, options)
+            val bitmap =
+                BitmapFactory.decodeResource(view.context.resources, R.drawable.sunmi, options)
 
-            printBitmap(bitmap, BitmapStyle.getStyle().setAlign(Align.CENTER).setAlgorithm(ImageAlgorithm.BINARIZATION).setValue(120).setWidth(384).setHeight(150))
+            printBitmap(
+                bitmap,
+                BitmapStyle.getStyle().setAlign(Align.CENTER)
+                    .setAlgorithm(ImageAlgorithm.BINARIZATION).setValue(120).setWidth(384)
+                    .setHeight(150)
+            )
+            printDividingLine(DividingLine.EMPTY, 10)
 
             printDividingLine(DividingLine.DOTTED, 2)
 
             printText("----Bar Code----", TextStyle.getStyle().setTextSize(48))
-            printBarCode(url,
+            printBarCode(
+                url,
                 BarcodeStyle.getStyle()
                     .setAlign(Align.CENTER)
                     .setHeight(100)
                     .setDotWidth(5)
-                    .setReadable(HumanReadable.POS_TWO)
+                    .setReadable(HumanReadable.HIDE)
             )
 
-            printDividingLine(DividingLine.DOTTED, 2)
+            printDividingLine(DividingLine.EMPTY, 10)
 
             printText("----QR Code----", TextStyle.getStyle().setTextSize(48))
             printQrCode(
@@ -102,17 +120,18 @@ class TicketViewModel : ViewModel() {
                 override fun onResult(resultCode: Int, message: String?) {
                     enableTransMode(false)
 
-                    if (resultCode == 0) {
-                        Toast.makeText(context, "Çap uğurla tamamlandı", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Çap uğursuz oldu: $message", Toast.LENGTH_LONG).show()
+                    (context as? android.app.Activity)?.runOnUiThread {
+                        if (resultCode == 0) {
+                            Toast.makeText(context, "PRINT SUCCESSFULLY COMPLETED)", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "PRINT FAILED: $message", Toast.LENGTH_LONG)
+                                .show()
+                        }
                     }
                 }
             })
 
-        } ?: run {
-            Toast.makeText(context, "Printer tapılmadı", Toast.LENGTH_SHORT).show()
+
         }
     }
-
 }
