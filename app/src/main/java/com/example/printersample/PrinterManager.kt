@@ -7,23 +7,26 @@ import com.sunmi.printerx.enums.Align
 import com.sunmi.printerx.enums.ImageAlgorithm
 import com.sunmi.printerx.style.BitmapStyle
 
-class PrinterManager {
+class PrinterManager(private val context: Context) {
 
-    fun print(bitmap: Bitmap, context: Context) {
+    fun printBitmap(bitmap: Bitmap) {
         val printer = Constant.selectPrinter
         val lineApi = printer?.lineApi()
 
-        if (lineApi != null) {
-            lineApi.printBitmap(
-                bitmap,
-                BitmapStyle.getStyle()
-                    .setAlign(Align.CENTER)
-                    .setWidth(384)
-                    .setAlgorithm(ImageAlgorithm.DITHERING)
-            )
-            lineApi.autoOut()
-        } else {
+        if (lineApi == null) {
             Toast.makeText(context, "PRINTER NOT READY", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        lineApi.printBitmap(
+            bitmap,
+            BitmapStyle.getStyle()
+                .setAlign(Align.CENTER)
+                .setWidth(384)
+                .setAlgorithm(ImageAlgorithm.DITHERING)
+        )
+
+        lineApi.autoOut()
     }
 }
+
