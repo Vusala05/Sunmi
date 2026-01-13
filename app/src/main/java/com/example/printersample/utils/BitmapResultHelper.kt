@@ -1,4 +1,4 @@
-package com.example.printersample
+package com.example.printersample.utils
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.provider.MediaStore
+import com.example.printersample.Action
 
 object BitmapResultHelper {
     fun getBitmapFromResult(context: Context, resultIntent: Intent?, action: Action?): Bitmap? {

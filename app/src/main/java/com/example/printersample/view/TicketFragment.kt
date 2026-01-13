@@ -1,4 +1,4 @@
-package com.example.printersample
+package com.example.printersample.view
 
 import android.os.Bundle
 import android.util.Log
@@ -6,6 +6,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.printersample.viewModel.PrinterViewModel
+import com.example.printersample.R
+import com.example.printersample.viewModel.TicketViewModel
 import com.example.printersample.databinding.FragmentTicketBinding
 
 class TicketFragment : Fragment(R.layout.fragment_ticket) {

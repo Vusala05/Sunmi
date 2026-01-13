@@ -1,12 +1,9 @@
-package com.example.printersample
+package com.example.printersample.viewModel
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.example.printersample.utils.Constant
 import com.sunmi.printerx.PrinterSdk
-
-
 
 class PrinterViewModel : ViewModel() {
 

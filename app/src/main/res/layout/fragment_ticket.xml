@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="24dp"
     android:orientation="vertical"
-    tools:context=".TicketFragment">
+    tools:context=".view.TicketFragment">
 
     <EditText
         android:id="@+id/url"

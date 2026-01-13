@@ -1,5 +1,6 @@
-package com.example.printersample
+package com.example.printersample.utils
 
+import com.example.printersample.Action
 import com.sunmi.printerx.PrinterSdk
 
 object Constant {

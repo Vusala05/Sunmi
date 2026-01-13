@@ -1,4 +1,4 @@
-package com.example.printersample
+package com.example.printersample.view
 
 import android.Manifest
 import android.app.Activity
@@ -15,6 +15,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.printersample.Action
+import com.example.printersample.utils.BitmapResultHelper
+import com.example.printersample.utils.BitmapUtils
+import com.example.printersample.utils.Constant
+import com.example.printersample.utils.GalleryPermissionUtils
+import com.example.printersample.utils.PermissionUiHelper
+import com.example.printersample.utils.PrinterManager
+import com.example.printersample.viewModel.PrinterViewModel
+import com.example.printersample.R
 import com.example.printersample.databinding.FragmentPhotoBinding
 
 class PhotoFragment : Fragment(R.layout.fragment_photo) {
@@ -120,8 +129,10 @@ class PhotoFragment : Fragment(R.layout.fragment_photo) {
     }
 
     private fun openAppSettings() {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", requireContext().packageName, null))
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", requireContext().packageName, null)
+        )
         startActivity(intent)
     }
 }
-

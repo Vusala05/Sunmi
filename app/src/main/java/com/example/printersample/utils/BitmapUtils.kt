@@ -1,13 +1,14 @@
-package com.example.printersample
+package com.example.printersample.utils
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.os.Build
 
 object BitmapUtils {
 
     fun prepareForPrinter(bitmap: Bitmap, printerWidth: Int = 384): Bitmap {
-        val softwareBitmap = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O &&
+        val softwareBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
             bitmap.config == Bitmap.Config.HARDWARE) {
             bitmap.copy(Bitmap.Config.ARGB_8888, false)
         } else {
@@ -25,4 +26,3 @@ object BitmapUtils {
         return result
     }
 }
-

@@ -1,4 +1,4 @@
-package com.example.printersample
+package com.example.printersample.utils
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -29,4 +29,3 @@ class PrinterManager(private val context: Context) {
         lineApi.autoOut()
     }
 }
-

@@ -1,4 +1,4 @@
-package com.example.printersample
+package com.example.printersample.utils
 
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher

@@ -1,10 +1,7 @@
-package com.example.printersample
+package com.example.printersample.utils
 
 import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
-import androidx.core.content.ContextCompat
 
 object GalleryPermissionUtils {
     fun galleryPermission(): String {
@@ -14,5 +11,3 @@ object GalleryPermissionUtils {
             Manifest.permission.READ_EXTERNAL_STORAGE
     }
     }
-
-

@@ -1,10 +1,13 @@
-package com.example.printersample
+package com.example.printersample.viewModel
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
+import com.example.printersample.R
+import com.example.printersample.utils.Constant
 import com.sunmi.printerx.api.PrintResult
 import com.sunmi.printerx.enums.Align
 import com.sunmi.printerx.enums.DividingLine
@@ -120,7 +123,7 @@ class TicketViewModel : ViewModel() {
                 override fun onResult(resultCode: Int, message: String?) {
                     enableTransMode(false)
 
-                    (context as? android.app.Activity)?.runOnUiThread {
+                    (context as? Activity)?.runOnUiThread {
                         if (resultCode == 0) {
                             Toast.makeText(context, "PRINT SUCCESSFULLY COMPLETED)", Toast.LENGTH_SHORT).show()
                         } else {
